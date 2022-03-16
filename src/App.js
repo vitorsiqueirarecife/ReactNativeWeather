@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {TouchableOpacity, SafeAreaView, View, Text} from 'react-native';
 import {style} from './styles';
+import useLocation from './Hooks/useLocation';
 
 const App = () => {
+
+  const { coordenates, error, loadPosition } = useLocation();	
+
+  useEffect(()=>{
+    loadPosition()
+  },[])
+
+  useEffect(()=>{
+    console.log(coordenates)
+  },[coordenates])
+
   return (
       <SafeAreaView style={style.wrapper}>
           <View style={style.card}>
