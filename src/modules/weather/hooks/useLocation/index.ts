@@ -4,16 +4,17 @@ import { PERMISSIONS, request, check } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import { Platform, Alert } from 'react-native';
 import AlertAsync from "react-native-alert-async";
+import { Coordenates } from './types';
 
 const useLocation = () => {
-    const [error, setError] = useState(null); 
-    const [coordenates, setCoordenates] = useState(null);   
+    const [error, setError] = useState<string | null>(null); 
+    const [coordenates, setCoordenates] = useState<Coordenates | null>(null);   
 
     const givePermission = useCallback(async ()=> {
 
-        const locationWhenInUse = Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.LOCATION_WHEN_IN_USE
+        const locationPermission = Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
 
-        const isPermission = await check(locationWhenInUse)
+        const isPermission = await check(locationPermission)
         
         if(isPermission === 'blocked'){
             
@@ -25,7 +26,7 @@ const useLocation = () => {
 
             await AlertAsync('Permissão de localização', 'Nosso aplicativo precisa acessar sua localização.');
             
-            const permission = await request(locationWhenInUse)
+            const permission = await request(locationPermission)
             .then(
                 (status) => {               
                    
@@ -63,7 +64,7 @@ const useLocation = () => {
                     setError('');
                     setCoordenates({  latitude: coords.latitude, longitude: coords.longitude });          
                      
-                }, (e) => {                  
+                }, () => {                  
                     setError('Não foi possível obter sua localização');
                 }                               
             )    
