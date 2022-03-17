@@ -7,5 +7,5 @@ export const ButtonSC = styled(TouchableOpacity)`
     align-content: center;
     background-color: #AAA439;
     padding: 10px;
-    margin: 5px;
+    margin: 10px;
 `

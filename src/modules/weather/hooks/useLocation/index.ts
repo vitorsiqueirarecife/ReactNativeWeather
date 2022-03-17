@@ -8,6 +8,7 @@ import { Coordenates } from './types';
 
 const useLocation = () => {
     const [error, setError] = useState<string | null>(null); 
+    const [loading, setLoading] = useState<boolean>(false); 
     const [coordenates, setCoordenates] = useState<Coordenates | null>(null);   
 
     const givePermission = useCallback(async ()=> {
@@ -59,19 +60,22 @@ const useLocation = () => {
         const permission = await givePermission()
             
         if (permission) {   
+            setLoading(true)
             Geolocation.getCurrentPosition(       
                 ({coords}) => {                            
                     setError('');
+                    setLoading(false)
                     setCoordenates({  latitude: coords.latitude, longitude: coords.longitude });          
                      
-                }, () => {                  
+                }, () => {    
+                    setLoading(false)              
                     setError('Não foi possível obter sua localização');
                 }                               
             )    
         }            
     },[])
 
-  return { loadPosition, coordenates, error }
+  return { loadPosition, coordenates, error, loading }
 }
 
 export default useLocation

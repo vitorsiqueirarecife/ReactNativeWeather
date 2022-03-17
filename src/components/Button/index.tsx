@@ -3,9 +3,9 @@ import Title from '../Title';
 import { ButtonSC } from './styles';
 import { Props } from './types';
 
-const Button = ({ children }: Props) => {
+const Button = ({ children, onPress }: Props) => {
   return (
-    <ButtonSC><Title>{children}</Title></ButtonSC>    
+    <ButtonSC onPress={onPress}><Title>{children}</Title></ButtonSC>    
   );
 };
 
