@@ -1,66 +1,74 @@
 
 import { useState, useCallback } from 'react';
-import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
+import { PERMISSIONS, request, check } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
+import AlertAsync from "react-native-alert-async";
 
 const useLocation = () => {
-  const [error, setError] = useState(null); 
-  const [coordenates, setCoordenates] = useState(null);   
+    const [error, setError] = useState(null); 
+    const [coordenates, setCoordenates] = useState(null);   
 
-  const isPermission = useCallback(()=> {
+    const givePermission = useCallback(async ()=> {
 
-    if(Platform.OS == 'android'){
+        const locationWhenInUse = Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.LOCATION_WHEN_IN_USE
 
-        const fineLocation = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        const backgroundLocation = PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION
+        const isPermission = await check(locationWhenInUse)
+        
+        if(isPermission === 'blocked'){
+            
+            Alert.alert('Permissão de localização', 'Nosso aplicativo precisa acessar sua localização. Acesse as configurações do seu dispositivo para habilitá-las')
+            
+            return false;
 
-        const permission = requestMultiple([fineLocation, backgroundLocation]).then(
-            (status) => {
-                const statusFine = status[fineLocation]; 
-                const statusBack = status[backgroundLocation]; 
+        }else if(isPermission !== 'granted'){
 
-                if (Platform.Version < 29) { 
-                    if (statusFine == 'granted') {
+            await AlertAsync('Permissão de localização', 'Nosso aplicativo precisa acessar sua localização.');
+            
+            const permission = await request(locationWhenInUse)
+            .then(
+                (status) => {               
+                   
+                    if (Platform.OS == 'android' && Platform.Version < 29) { 
+                        if (status == 'granted') {
+                            return true;
+                        } else {
+                            setError('Usuário não aceitou solicitação de uso do GPS');
+                        }
+                    }
+    
+                    if (status == 'granted') {
                         return true;
                     } else {
                         setError('Usuário não aceitou solicitação de uso do GPS');
                     }
-                }
-
-                if (statusFine == 'granted' && statusBack == 'granted') {
-                    return true;
-                } else {
-                    setError('Usuário não aceitou solicitação de uso do GPS');
-                }
-            },
-        );
-        
-        if(permission !== true){
-            return false;
+                },
+            ).catch((e)=>{
+                console.log(e)
+            })
+   
+            return permission;
         }
 
-    }
+        return true;
+        
+    },[])
 
-    return true;
-
-  },[])
-
-  const loadPosition = useCallback(() => {
-
-        const permission = isPermission()       
-
-        if (permission) {           
+    const loadPosition = useCallback(async () => {
+        const permission = await givePermission()
+            
+        if (permission) {   
             Geolocation.getCurrentPosition(       
-                ({coords}) => {           
-                    setCoordenates({  latitude: coords.latitude, longitude: coords.longitude });
-                }, () => {
+                ({coords}) => {                            
+                    setError('');
+                    setCoordenates({  latitude: coords.latitude, longitude: coords.longitude });          
+                     
+                }, (e) => {                  
                     setError('Não foi possível obter sua localização');
                 }                               
-            )
-        }
-        
-  },[])
+            )    
+        }            
+    },[])
 
   return { loadPosition, coordenates, error }
 }
