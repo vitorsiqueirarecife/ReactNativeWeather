@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, SafeAreaView, View, Text } from 'react-native';
-import { style } from './styles';
 import useLocation from '../hooks/useLocation';
 import useWeather from '../hooks/useWeather/useWeather'
+import CardTitle from '../../../components/CardTitle';
+import CardContent from '../../../components/CardContent';
+import Title from '../../../components/Title';
+import Content from '../../../components/Content';
+import SafeArea from '../../../components/SafeArea';
+import Button from '../../../components/Button';
 
 const Weather = () => {
 
@@ -24,27 +28,28 @@ const Weather = () => {
   },[coordenates])
 
   return (
-      <SafeAreaView style={style.wrapper}>
-          <View style={style.card}>
-            <Text style={style.title}>Location</Text>
-          </View>
-          <View style={style.cardContent}>
-            <Text style={style.content}>{informations?.city} - {informations?.country}</Text>
-          </View>
-          <View style={style.card}>
-            <Text style={style.title}>Weather</Text>
-          </View>
-          <View style={style.cardContent}>
-            <Text style={style.content}>{informations?.temperature} graus celsius ({informations?.description})</Text>
-            <Text style={style.content}>Humidity: {informations?.humidity}</Text>
-            <Text style={style.content}>Pressure: {informations?.pressure}</Text>  
-          </View>            
-          <TouchableOpacity style={style.button} >
-            <Text style={style.title} onPress={()=> {
+      <SafeArea>
+          <CardTitle>
+            <Title>Location</Title>
+          </CardTitle>
+          <CardContent>
+            <Content>{`${informations?.city} - ${informations?.country}`}</Content>
+          </CardContent>
+          <CardTitle>
+            <Title>Weather</Title>
+          </CardTitle>
+          <CardContent>            
+              <Content>{`${informations?.temperature} graus celsius (${informations?.description})`}</Content>
+              <Content>{`Humidity: ${informations?.humidity}`}</Content>
+              <Content>{`Pressure: ${informations?.pressure}`}</Content>              
+          </CardContent>            
+          <Button            
+            onPress={()=> {
               getWeather(coordenates?.latitude, coordenates?.longitude)   
-            }} >Atualizar</Text>
-          </TouchableOpacity>                 
-      </SafeAreaView>
+            }}>
+              Refresh
+          </Button>                 
+      </SafeArea>
   );
 };
 
