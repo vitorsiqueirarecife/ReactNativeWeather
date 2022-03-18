@@ -1,15 +1,35 @@
-import React from 'react';
-import CardTitle from '../../../components/CardTitle';
+import React, { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native';
 import SafeArea from '../../../components/SafeArea';
-import Title from '../../../components/Title';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Routes } from '../../../shared/routesType';
+import { Card, Wait, Welcome } from '../components/Welcome/styles';
 
 const Home = () => {
+
+  const navigation = useNavigation<StackNavigationProp<Routes>>();
+  
+  useEffect(()=>{
+
+    setTimeout(()=>{
+      navigation.navigate('Weather')
+    }, 2500)
+
+  },[])
+
   return (
-      <SafeArea>
-          <CardTitle>
-            <Title>Home</Title>
-          </CardTitle>    
-      </SafeArea>
+      <SafeArea>        
+          <Card>
+            <Welcome>Seja bem-vindo!</Welcome>
+          </Card>  
+          <Card>
+            <Wait>Por favor, aguarde</Wait>
+          </Card>  
+          <Card>
+            <ActivityIndicator size="large" color="#8c87d4" />
+          </Card>
+       </SafeArea>
   );
 };
 
