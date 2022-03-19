@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import { PERMISSIONS, request, check } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import { Platform, Alert } from 'react-native';
-import AlertAsync from "react-native-alert-async";
 import { Coordenates } from './types';
+import AsyncAlert from '../../screens/utils/AsyncAlert';
 
 const useLocation = () => {
     const [error, setError] = useState<string | null>(null); 
@@ -25,7 +25,7 @@ const useLocation = () => {
 
         }else if(isPermission !== 'granted'){
 
-            await AlertAsync('Permissão de localização', 'Nosso aplicativo precisa acessar sua localização.');
+            await AsyncAlert('Permissão de localização', 'Nosso aplicativo precisa acessar sua localização.');
             
             const permission = await request(locationPermission)
             .then(

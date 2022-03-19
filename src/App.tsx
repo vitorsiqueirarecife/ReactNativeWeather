@@ -7,8 +7,8 @@ import Home from './modules/home/screens';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-
-  return (
+  
+    return (
     <NavigationContainer>
       <Stack.Navigator
          screenOptions={{
