@@ -13,4 +13,7 @@ module.exports = {
     },
   },
   cacheDirectory: '.jest/cache',
+  moduleNameMapper: {
+    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+  },
 };
