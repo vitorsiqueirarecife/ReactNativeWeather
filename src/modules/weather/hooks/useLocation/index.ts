@@ -4,7 +4,7 @@ import { PERMISSIONS, request, check } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import { Platform, Alert } from 'react-native';
 import { Coordenates } from './types';
-import AsyncAlert from '../../screens/utils/AsyncAlert';
+import AsyncAlert from '../../../../shared/components/AsyncAlert';
 
 const useLocation = () => {
     const [error, setError] = useState<string | null>(null); 
