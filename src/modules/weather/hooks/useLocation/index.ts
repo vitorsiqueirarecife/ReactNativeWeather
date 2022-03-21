@@ -1,7 +1,7 @@
 
 import { useState, useCallback } from 'react';
 import { PERMISSIONS, request, check } from 'react-native-permissions';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import { Platform, Alert } from 'react-native';
 import { Coordenates } from './types';
 import AsyncAlert from '../../../../shared/components/AsyncAlert';
@@ -58,7 +58,7 @@ const useLocation = () => {
 
     const loadPosition = useCallback(async () => {
         const permission = await givePermission()
-            
+
         if (permission) {   
             setLoading(true)
             Geolocation.getCurrentPosition(       
@@ -70,7 +70,8 @@ const useLocation = () => {
                 }, () => {    
                     setLoading(false)              
                     setError('Não foi possível obter sua localização');
-                }                               
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }                            
             )    
         }            
     },[])
