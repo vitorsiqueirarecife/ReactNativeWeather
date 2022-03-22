@@ -3,16 +3,16 @@
 
 Application that consumes the user's current location and displays the current address, climate data for the region and a button to update the data on the interface.
 
-**Run IOS:**
+**Run IOS**
 - yarn install (root path)
 - pod install (ios path)
 - yarn ios (root path)
 
-**Run Android:**
+**Run Android**
 - yarn install (root path)
 - yarn android (root path)
 
-**Libraries used:**
+**Libraries used**
 - Typescript
 - React navigation
 - Axios
@@ -23,13 +23,16 @@ Application that consumes the user's current location and displays the current a
 - Prettier
 - Jest
 
-**API used:**
+**API used**
 - https://openweathermap.org/api
+
+**Deploy**
+- Bitrise
 
 **TODO:**
 - Fix bug on test and deploy flow.
 
-**Screens:** 
+**Screens** 
 
 ![alt text](https://github.com/vitorsiqueirarecife/ReactNativeWeather/blob/main/prints/1.png?raw=true=200x)
 

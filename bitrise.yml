@@ -21,10 +21,6 @@ workflows:
         inputs:
         - workdir: $WORKDIR
         - command: install
-    - yarn@0:
-        inputs:
-        - workdir: $WORKDIR
-        - command: test
     - install-missing-android-tools@3:
         inputs:
         - gradlew_path: $PROJECT_LOCATION/gradlew
