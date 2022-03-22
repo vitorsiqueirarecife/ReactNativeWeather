@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {ActivityIndicator} from 'react-native';
-import SafeArea from '../../../components/SafeArea';
+import SafeArea from '../../../shared/components/SafeArea';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Routes} from '../../../shared/types/routesType';

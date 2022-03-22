@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import useLocation from '../hooks/useLocation';
 import useWeather from '../hooks/useWeather/useWeather';
-import CardTitle from '../../../components/CardTitle';
-import CardContent from '../../../components/CardContent';
-import Title from '../../../components/Title';
-import Content from '../../../components/Content';
-import SafeArea from '../../../components/SafeArea';
-import Button from '../../../components/Button';
+import CardTitle from '../../../shared/components/CardTitle';
+import CardContent from '../../../shared/components/CardContent';
+import Title from '../../../shared/components/Title';
+import Content from '../../../shared/components/Content';
+import SafeArea from '../../../shared/components/SafeArea';
+import Button from '../../../shared/components/Button';
 import {ActivityIndicator} from 'react-native';
 
 const Weather = () => {
