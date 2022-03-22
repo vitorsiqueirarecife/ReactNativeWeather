@@ -26,6 +26,9 @@ Application that consumes the user's current location and displays the current a
 **API used:**
 - https://openweathermap.org/api
 
+**TODO:**
+- Fix bug on test and deploy flow.
+
 **Screens:** 
 
 ![alt text](https://github.com/vitorsiqueirarecife/ReactNativeWeather/blob/main/prints/1.png?raw=true=200x)
